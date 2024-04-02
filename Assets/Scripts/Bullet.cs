@@ -8,7 +8,6 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        // Give the bullet an initial forward momentum
         GetComponent<Rigidbody>().velocity = transform.forward * speed;
         Destroy(gameObject, destroyTime); // Destroys bullet after a set amount of time
     }
