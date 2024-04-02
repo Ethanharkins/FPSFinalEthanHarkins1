@@ -32,8 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            Debug.Log("Attempting to jump"); // This should print to the console when you press space
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+
 
         velocity.y += gravity * Time.deltaTime;
 

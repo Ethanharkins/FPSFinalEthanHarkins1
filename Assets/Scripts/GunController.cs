@@ -24,6 +24,15 @@ public class GunController : MonoBehaviour
         Debug.Log("Gun fired!");
         // Add shooting mechanics here, like raycasting from the camera forward and checking for hits
     }
+    public class GunPositionAdjuster : MonoBehaviour
+    {
+        void Start()
+        {
+            // Example: Adjusting position and rotation to predefined values
+            transform.localPosition = new Vector3(0.5f, -0.5f, 1f);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
 
     // Update is called once per frame
     void Update()
