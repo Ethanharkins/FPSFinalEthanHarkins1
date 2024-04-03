@@ -4,23 +4,24 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public float speed = 12f;
-    public float gravity = -1.6f; // Moon's gravity
     public float jumpHeight = 3f;
-
+    public float gravity = -9.81f;
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    public float groundDistance = 0.4f; // Radius of the ground check sphere
+    public LayerMask groundMask; // Layer mask to determine what is considered ground
 
     Vector3 velocity;
     bool isGrounded;
 
     void Update()
     {
+        // Check if player is on the ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        // If on the ground and velocity is downward, reset Y velocity
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // Slightly push player down to stick to the ground
+            velocity.y = -2f;
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -32,13 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            Debug.Log("Attempting to jump"); // This should print to the console when you press space
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-
         velocity.y += gravity * Time.deltaTime;
-
         controller.Move(velocity * Time.deltaTime);
     }
 }

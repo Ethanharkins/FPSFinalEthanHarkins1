@@ -2,35 +2,30 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public Transform shootingPoint;
-    public GameObject bulletPrefab;
-    public Camera playerCamera;
+    public Transform shootingPoint; // The point from which bullets are shot, should be a child of the camera or oriented with it
+    public GameObject bulletPrefab; // Assign your bullet prefab
+    public Camera playerCamera; // Reference to the player's camera to align bullets with the camera's forward direction
 
     void Update()
     {
-        AimGun();
-
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1")) // Default fire button
         {
             ShootBullet();
         }
-    }
-
-    void AimGun()
-    {
-        // Directly use the camera's forward direction for aiming.
-        // This assumes the gun's position is properly set relative to the camera.
-        transform.forward = playerCamera.transform.forward;
     }
 
     void ShootBullet()
     {
         if (bulletPrefab != null && shootingPoint != null)
         {
-            // Instantiate the bullet at the shooting point
-            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, Quaternion.identity);
-            // Align bullet's forward direction with the camera's (and hence the gun's) forward direction at the moment of shooting.
-            bullet.transform.forward = playerCamera.transform.forward;
+            // Instantiate the bullet at the shooting point and align it with the shooting point's (and therefore the camera's) forward direction
+            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, Quaternion.LookRotation(playerCamera.transform.forward));
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            if (bulletRb != null)
+            {
+                // Apply initial velocity in the forward direction
+                bulletRb.velocity = shootingPoint.forward * 20f; // Adjust the speed as necessary
+            }
         }
     }
 }

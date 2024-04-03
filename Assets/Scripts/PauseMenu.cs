@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // Required for loading scenes
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject overlayUI; // Assign your overlay UI GameObject in the Inspector
 
     void Update()
     {
@@ -26,6 +27,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f; // Resume game time
         GameIsPaused = false;
+        overlayUI.SetActive(true); // Reactivate the overlay UI
     }
 
     void Pause()
@@ -33,17 +35,12 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f; // Pause game time
         GameIsPaused = true;
+        overlayUI.SetActive(false); // Deactivate the overlay UI
     }
 
-    public void LoadMenu()
+    public void LoadMainMenu()
     {
-        Time.timeScale = 1f; // Ensure game time is resumed
-        SceneManager.LoadScene("MainMenuSceneName"); // Replace with your main menu scene name
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("Quitting game...");
-        Application.Quit();
+        Time.timeScale = 1f; // Ensure game time is normalized before loading the main menu
+        SceneManager.LoadScene("MainMenu"); // Load the scene named "MainMenu"
     }
 }
